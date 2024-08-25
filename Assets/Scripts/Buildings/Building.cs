@@ -1,21 +1,18 @@
-using System;
 using Interfaces;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Buildings
 {
-    public class Building : MonoBehaviour, IDamageable
+    public enum BuildingType
     {
-        private enum BuildingType
-        {
-            Barracks,
-            PowerPlant,
-        }
-        
-        [SerializeField] private BuildingType buildingType;
+        Barracks,
+        PowerPlant,
+    }
+
+    public abstract class Building : MonoBehaviour, IPlaceable ,IDamageable
+    {
+        [SerializeField] protected BuildingType buildingType;
         [SerializeField] private int health = 100;
-        
 
         public int Health
         {
@@ -25,11 +22,26 @@ namespace Buildings
 
         public bool IsDead => health <= 0;
 
-        public void TakeDamage(int damage)
+        public virtual void TakeDamage(int damage)
         {
             health -= damage;
-            
+
             Debug.Log($"{buildingType} took {damage} damage. Remaining health: {health}");
+            
+            if (IsDead)
+            {
+                DestroyPlaceable();
+            }
+        }
+        
+        private void DestroyPlaceable()
+        {
+            Destroy(gameObject);
+        }
+
+        public void Place()
+        {
+            
         }
     }
 }

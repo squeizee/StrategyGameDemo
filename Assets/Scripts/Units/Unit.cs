@@ -3,13 +3,14 @@ using UnityEngine;
 
 namespace Units
 {
+    public enum UnitType
+    {
+        Soldier1,
+        Soldier2,
+        Soldier3,
+    }
     public class Unit : MonoBehaviour, IDamageable
     {
-        private enum UnitType
-        {
-            Soldier,
-        }
-        
         [SerializeField] private UnitType unitType;
         [SerializeField] private int health = 100;
         
@@ -25,6 +26,16 @@ namespace Units
             health -= damage;
             
             Debug.Log($" {unitType} took {damage} damage. Remaining health: {health}");
+            
+            if (IsDead)
+            {
+                DestroyUnit();
+            }
+        }
+        
+        private void DestroyUnit()
+        {
+            Destroy(gameObject);
         }
     }
 }
