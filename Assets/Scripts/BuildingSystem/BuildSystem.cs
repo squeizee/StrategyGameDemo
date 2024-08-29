@@ -17,7 +17,7 @@ namespace BuildingSystem
         
         private void TryToBuild(Vector3 position)
         {
-            if(GridController.Instance.IsValidToBuild(position, out var buildingPosition))
+            if(GridController.Instance.TryGetEmptyCellAtPosition(position, out var buildingPosition))
             {
                 Instantiate(barrackPrefab, buildingPosition, Quaternion.identity);
             }
