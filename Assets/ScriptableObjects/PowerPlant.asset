@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildingName: Power Plant
   buildingType: 1
-  buildingPrefab: {fileID: 5376363490904231996, guid: 6f44df42b990abd49bf32d6e5bcd64bc, type: 3}
+  buildingPrefab: {fileID: 4796712154307514541, guid: 6f44df42b990abd49bf32d6e5bcd64bc, type: 3}
   buildingIcon: {fileID: 21300000, guid: c6cb7baf33e7fff4ba6ed6289351e4a2, type: 3}
   dimensions: {x: 2, y: 3}
   health: 50

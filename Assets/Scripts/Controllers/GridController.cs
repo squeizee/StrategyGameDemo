@@ -32,17 +32,20 @@ namespace Controllers
             CreateGrid();
         }
         
-        public bool TryGetEmptyCellAtPosition(Vector3 position, out Vector3 cellWorldPosition)
+        public void Place(Vector3 position, CellType cellType,Vector2Int dim)
         {
             var gridPosition = GetGridPosition(position);
-            var cell = GetCell(gridPosition);
-            if (!cell)
+            for (int i = gridPosition.x; i < gridPosition.x + dim.x; i++)
             {
-                cellWorldPosition = Vector3.zero;
-                return false;
+                for (int j = gridPosition.y; j < gridPosition.y + dim.y; j++)
+                {
+                    var cell = GetCell(new Vector2Int(i, j));
+                    if (cell)
+                    {
+                        cell.SetCellType(cellType);
+                    }
+                }
             }
-            cellWorldPosition = cell.WorldPosition - _cellOffset;
-            return cell.CellType == CellType.Empty;
         }
         public Vector3 GetSnappedPosition(Vector3 position)
         {
@@ -72,9 +75,9 @@ namespace Controllers
             
             return nodes;
         }
-        public bool IsPlaceValid(Vector3 cursorPos, Vector2Int selectedBuildingDimensions)
+        public bool IsPlaceValid(Vector3 cursorPos, Vector2Int selectedBuildingDimensions, out Vector3 buildingPos)
         {
-            var gridPosition = GetGridPosition(cursorPos);
+            buildingPos = GetSnappedPosition(cursorPos);
             return IsValidToBuild(selectedBuildingDimensions, cursorPos);
         }
         private bool IsValidToBuild(Vector2Int dim, Vector3 position)

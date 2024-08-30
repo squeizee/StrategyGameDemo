@@ -6,15 +6,16 @@ namespace UI
     public class Panel : MonoBehaviour
     {
         protected int MoveDirection = 0;
-        public virtual void Hide()
+        protected float InitialXPosition;
+        public virtual void Hide(float duration = .5f)
         {
             // Move the panel out of the screen
-            transform.DOLocalMoveX(MoveDirection * Screen.width, .5f).SetEase(Ease.InOutBack);
+            transform.DOLocalMoveX(MoveDirection * Screen.width, duration).SetEase(Ease.InOutBack);
         }
-        public virtual void Show()
+        public virtual void Show(float duration = .5f)
         {
             // Move the panel to the screen
-            transform.DOLocalMoveX(0, .5f).SetEase(Ease.InOutBack);
+            transform.DOLocalMoveX(InitialXPosition, duration).SetEase(Ease.InOutBack);
         }
     }
 }

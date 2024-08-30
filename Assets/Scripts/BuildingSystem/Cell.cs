@@ -22,5 +22,10 @@ namespace BuildingSystem
             gridPosition = gridPos;
             transform.localPosition = localPos;
         }
+        
+        public void SetCellType(CellType type)
+        {
+            cellType = type;
+        }
     }
 }

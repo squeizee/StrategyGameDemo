@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using UI;
 using UnityEngine;
@@ -23,19 +24,32 @@ namespace Managers
             productionPanel.OnProductSelected -= OnProductSelected;
         }
 
+        private void Start()
+        {
+            informationPanel.Hide(0f);
+        }
+
         private void OnProductSelected()
         {
-            HideAllPanels();
+            HideProductPanel();
+            HideInformationPanel();
         }
         
         private void ShowProductPanel()
         {
             productionPanel.Show();
         }
-        private void HideAllPanels()
+        private void HideProductPanel()
+        {
+            productionPanel.Hide();
+        }
+        private void ShowInformationPanel()
+        {
+            informationPanel.Show();
+        }
+        private void HideInformationPanel()
         {
             informationPanel.Hide();
-            productionPanel.Hide();
         }
     }
 }

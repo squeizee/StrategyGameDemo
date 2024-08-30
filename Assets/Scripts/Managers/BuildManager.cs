@@ -12,13 +12,20 @@ namespace Managers
         public Action OnBuildingPlaced;
             
         [SerializeField] private PreviewObject previewObject;
-        
+        [SerializeField] private Transform board;
         private BuildingSo _selectedBuilding;
-        
-        
+
+        private State _state;
+        private enum State
+        {
+            Idle,
+            Moving,
+            Building,
+        }
 
         private void Start()
         {
+            _state = State.Idle;
             InputManager.Instance.OnLeftClick += TryToBuild;
             previewObject.Hide();
         }
@@ -36,14 +43,15 @@ namespace Managers
         {
             _selectedBuilding = buildingSo;
             previewObject.Init(_selectedBuilding.buildingIcon, _selectedBuilding.dimensions);
+            _state = State.Moving;
         }
         
         private void TryMovePreviewObject(Vector3 cursorPos)
         {
-            if (_selectedBuilding)
+            if (_selectedBuilding && _state == State.Moving)
             {
                 previewObject.ChangePosition(cursorPos, 
-                    GridController.Instance.IsPlaceValid(cursorPos, _selectedBuilding.dimensions));
+                    GridController.Instance.IsPlaceValid(cursorPos, _selectedBuilding.dimensions, out _));
             }
         }
         private void TryToBuild(Vector3 position)
@@ -52,15 +60,23 @@ namespace Managers
             {
                 return;
             }
-            
-            if(GridController.Instance.TryGetEmptyCellAtPosition(position, out var buildingPosition))
+            if(GridController.Instance.IsPlaceValid(position, _selectedBuilding.dimensions, out var buildingPosition))
             {
-                Instantiate(_selectedBuilding.buildingPrefab, buildingPosition, Quaternion.identity);
+                _state = State.Building;
+                GridController.Instance.Place(position, CellType.Building, _selectedBuilding.dimensions);
+                var building = Instantiate(_selectedBuilding.buildingPrefab, board);
+                building.transform.position = buildingPosition;
+                OnBuildingPlaced?.Invoke();
+                
+                _state = State.Idle;
+                previewObject.Hide();
+                _selectedBuilding = null;
             }
             else
             {
-                Debug.Log("Can't build at " + position);
+                Debug.Log("Invalid Position");
             }
+            
             
         }
         

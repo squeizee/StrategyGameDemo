@@ -36,6 +36,7 @@ namespace UI
         private void Start()
         {
             MoveDirection = -1;
+            InitialXPosition = transform.localPosition.x;
             CreateProducts();
         }
         
@@ -53,14 +54,14 @@ namespace UI
             }
         }
 
-        public override void Show()
+        public override void Show(float duration = .5f)
         {
-            base.Show();
+            base.Show(duration);
         }
 
-        public override void Hide()
+        public override void Hide(float duration = .5f)
         {
-            base.Hide();
+            base.Hide(duration);
         }
         private void ProductClicked(BuildingType buildingType)
         {
