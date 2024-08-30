@@ -19,6 +19,7 @@ namespace Controllers
         
         [SerializeField] private Camera mainCamera;
         [SerializeField] private Cell cellPrefab;
+        [SerializeField] private PreviewObject previewObject;
         
         private readonly Vector3 _cellOffset = new(.5f, .5f, 0);
         

@@ -15,6 +15,6 @@ MonoBehaviour:
   buildingName: Barrack
   buildingType: 0
   buildingPrefab: {fileID: 1514453834323691664, guid: 44fd365dc818853418ddff4da44455c6, type: 3}
-  buildingIcon: {fileID: 2800000, guid: ac8d9492565a90c49b06fba0328e026d, type: 3}
+  buildingIcon: {fileID: 21300000, guid: ac8d9492565a90c49b06fba0328e026d, type: 3}
   dimensions: {x: 4, y: 4}
   health: 100
