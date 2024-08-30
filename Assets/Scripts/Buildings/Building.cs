@@ -29,7 +29,12 @@ namespace Buildings
         {
             Health = so.health;
         }
-
+        public void Place(Vector3 position)
+        {
+            transform.position = position;
+            Debug.Log($"{so.buildingType} placed.");
+        }
+        
         public virtual void TakeDamage(int damage)
         {
             currentHealth -= damage;
@@ -47,10 +52,6 @@ namespace Buildings
             Destroy(gameObject);
         }
 
-        public void Place(Vector3 position)
-        {
-            transform.position = position;
-            Debug.Log($"{so.buildingType} placed.");
-        }
+        
     }
 }

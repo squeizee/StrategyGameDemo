@@ -12,7 +12,7 @@ namespace UI
 {
     public class ProductionPanel : Panel
     {
-        public Action OnProductSelected;
+        public Action OnBuildingOnProductSelected;
 
         [SerializeField] private BuildingProduct buildingProductPrefab;
         [SerializeField] private Transform productsParent;
@@ -67,12 +67,13 @@ namespace UI
         {
             base.Hide(duration);
         }
-        private void ProductClicked(BuildingType buildingType)
+        
+        private void BuildingProductClicked(BuildingType buildingType)
         {
             var buildingSo = buildingSos.Find(x => x.buildingType == buildingType);
-            BuildManager.Instance.SetSelectedBuilding(buildingSo);
+            ObjectPlacer.Instance.SetSelectedBuildingData(buildingSo);
 
-            OnProductSelected?.Invoke();
+            OnBuildingOnProductSelected?.Invoke();
             Debug.Log("Product Clicked: " + buildingType);
         }
 
@@ -86,7 +87,7 @@ namespace UI
                 var randomBuildIndex = UnityEngine.Random.Range(0, buildingSos.Count);
                 buildingProduct.Init(buildingSos[randomBuildIndex].buildingIcon,
                     buildingSos[randomBuildIndex].buildingType, position);
-                buildingProduct.OnProductClicked += ProductClicked;
+                buildingProduct.OnProductClicked += BuildingProductClicked;
 
                 _buildingProducts.Add(buildingProduct);
 
@@ -97,7 +98,7 @@ namespace UI
                 buildingProduct.Init(buildingSos[randomBuildIndex].buildingIcon,
                     buildingSos[randomBuildIndex].buildingType, position);
 
-                buildingProduct.OnProductClicked += ProductClicked;
+                buildingProduct.OnProductClicked += BuildingProductClicked;
                 _buildingProducts.Add(buildingProduct);
             }
         }

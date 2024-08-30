@@ -16,5 +16,7 @@ MonoBehaviour:
   buildingType: 1
   buildingPrefab: {fileID: 1912692591610023171, guid: 6f44df42b990abd49bf32d6e5bcd64bc, type: 3}
   buildingIcon: {fileID: 21300000, guid: c6cb7baf33e7fff4ba6ed6289351e4a2, type: 3}
-  dimensions: {x: 2, y: 3}
+  dimension: {x: 2, y: 3}
   health: 50
+  canProduceUnits: 0
+  producibleUnits: []

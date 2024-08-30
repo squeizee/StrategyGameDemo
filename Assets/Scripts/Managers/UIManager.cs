@@ -2,6 +2,7 @@ using System;
 using Buildings;
 using DG.Tweening;
 using UI;
+using Units;
 using Unity.VisualScripting;
 using UnityEngine;
 using Utility;
@@ -16,24 +17,33 @@ namespace Managers
 
         private void OnEnable()
         {
-            BuildManager.Instance.OnBuildingPlaced += ShowProductPanel;
-            productionPanel.OnProductSelected += OnProductSelected;
+            ObjectPlacer.Instance.OnBuildingPlaced += ShowProductPanel;
+            productionPanel.OnBuildingOnProductSelected += OnBuildingProductSelected;
             InputManager.Instance.OnBuildingSelected += SetInformationPanel;
+            
+            informationPanel.OnUnitProductSelected += OnUnitProductSelected;
         }
+
+        
 
         private void OnDisable()
         {
-            BuildManager.Instance.OnBuildingPlaced -= ShowProductPanel;
-            productionPanel.OnProductSelected -= OnProductSelected;
+            ObjectPlacer.Instance.OnBuildingPlaced -= ShowProductPanel;
+            productionPanel.OnBuildingOnProductSelected -= OnBuildingProductSelected;
             InputManager.Instance.OnBuildingSelected -= SetInformationPanel;
+            
+            informationPanel.OnUnitProductSelected -= OnUnitProductSelected;
         }
 
         private void Start()
         {
             informationPanel.Hide(0f);
         }
-    
-        private void OnProductSelected()
+        private void OnUnitProductSelected()
+        {
+            HideInformationPanel();
+        }
+        private void OnBuildingProductSelected()
         {
             HideProductPanel();
             HideInformationPanel();

@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ca39a712f6a7439a8ca507615d17d2ab, type: 3}
-  m_Name: Soldier1
+  m_Name: Soldier2
   m_EditorClassIdentifier: 
-  unitName: Soldier1
-  unitType: 0
-  unitPrefab: {fileID: 8130310931272761697, guid: 9bfe673707bac5248ac82dc94f359bd7, type: 3}
-  unitIcon: {fileID: 21300000, guid: 6045c2223c8fe544e88ccf32b4feb150, type: 3}
+  unitName: Soldier2
+  unitType: 1
+  unitPrefab: {fileID: 8130310931272761697, guid: 27ba287de29d3ac4d856c2a181b0faca, type: 3}
+  unitIcon: {fileID: 21300000, guid: 0d9d0fa329ab1a3469c31b0e63927307, type: 3}
   dimension: {x: 1, y: 1}
   health: 10
-  damage: 10
+  damage: 5
   attackRange: 1
   attackSpeed: 1
   moveSpeed: 1

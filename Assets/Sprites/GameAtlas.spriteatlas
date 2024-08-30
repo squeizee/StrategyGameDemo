@@ -37,6 +37,8 @@ SpriteAtlas:
     - {fileID: 2800000, guid: ac8d9492565a90c49b06fba0328e026d, type: 3}
     - {fileID: 2800000, guid: 2cef788c15daca344bff87485c3af97f, type: 3}
     - {fileID: 2800000, guid: c6cb7baf33e7fff4ba6ed6289351e4a2, type: 3}
+    - {fileID: 2800000, guid: 0d9d0fa329ab1a3469c31b0e63927307, type: 3}
+    - {fileID: 2800000, guid: 93308ea43f8a86c488c4ad242003fea9, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -45,12 +47,16 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 6045c2223c8fe544e88ccf32b4feb150, type: 3}
   - {fileID: 21300000, guid: ac8d9492565a90c49b06fba0328e026d, type: 3}
   - {fileID: 21300000, guid: 6a01b573c013a4e4ca3ef9f3e817b698, type: 3}
+  - {fileID: 21300000, guid: 0d9d0fa329ab1a3469c31b0e63927307, type: 3}
+  - {fileID: 21300000, guid: 93308ea43f8a86c488c4ad242003fea9, type: 3}
   - {fileID: 21300000, guid: 2cef788c15daca344bff87485c3af97f, type: 3}
   - {fileID: 21300000, guid: c6cb7baf33e7fff4ba6ed6289351e4a2, type: 3}
   m_PackedSpriteNamesToIndex:
   - blue_body_square
   - green_body_square
   - cell
+  - pink_body_square
+  - purple_body_square
   - face_e
   - yellow_body_square
   m_RenderDataMap: {}

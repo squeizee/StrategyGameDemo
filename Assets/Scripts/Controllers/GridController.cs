@@ -75,10 +75,15 @@ namespace Controllers
             
             return nodes;
         }
-        public bool IsPlaceValid(Vector3 cursorPos, Vector2Int selectedBuildingDimensions, out Vector3 buildingPos)
+        public bool IsPlaceValid(Vector3 worldPos, Vector2Int selectedBuildingDimensions, out Vector3 buildingPos)
         {
-            buildingPos = GetSnappedPosition(cursorPos);
-            return IsValidToBuild(selectedBuildingDimensions, cursorPos);
+            buildingPos = GetSnappedPosition(worldPos);
+            return IsValidToBuild(selectedBuildingDimensions, worldPos);
+        }
+
+        public bool IsPlaceValid(Vector3 pos, Vector2Int selectedBuildingDimensions)
+        {
+            return IsValidToBuild(selectedBuildingDimensions, pos);
         }
         private bool IsValidToBuild(Vector2Int dim, Vector3 position)
         {
@@ -121,7 +126,7 @@ namespace Controllers
                 }
             }
         }
-        private Vector2Int GetGridPosition(Vector3 worldPosition)
+        public Vector2Int GetGridPosition(Vector3 worldPosition)
         {
             var firstPos = mainCamera.ViewportToWorldPoint(new Vector3(0, 0, mainCamera.nearClipPlane));
             var x = Mathf.FloorToInt(worldPosition.x - firstPos.x);

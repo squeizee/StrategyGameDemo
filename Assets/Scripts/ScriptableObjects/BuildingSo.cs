@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Buildings;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace ScriptableObjects
 {
@@ -11,10 +12,9 @@ namespace ScriptableObjects
         public BuildingType buildingType;
         public Building buildingPrefab;
         public Sprite buildingIcon;
-        public Vector2Int dimensions;
+        public Vector2Int dimension;
         public int health;
         public bool canProduceUnits;
         public List<UnitSo> producibleUnits;
     }
-    
 }
