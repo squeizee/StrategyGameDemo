@@ -1,16 +1,17 @@
 using Buildings;
 using Interfaces;
+using ScriptableObjects;
 using UnityEngine;
 
 namespace Factories
 {
     public class PowerPlantFactory : Factory
     {
-        [SerializeField] private PowerPlant powerPlantPrefab;
+        [SerializeField] private BuildingSo powerPlantSo;
         
-        public override IPlaceable Create()
+        public override IPlaceable Create(Transform parent)
         {
-            return Instantiate(powerPlantPrefab);
+            return Instantiate(powerPlantSo.buildingPrefab, parent);
         }
     }
 }

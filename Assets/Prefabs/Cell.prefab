@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d887979f6734025959d751e1f7054e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: 0, y: 0}
+  gridPosition: {x: 0, y: 0}
   cellType: 0
 --- !u!212 &3931486431950061074
 SpriteRenderer:

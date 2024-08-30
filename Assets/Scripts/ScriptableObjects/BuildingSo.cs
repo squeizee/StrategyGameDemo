@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Buildings;
 using UnityEngine;
 
@@ -8,9 +9,12 @@ namespace ScriptableObjects
     {
         public string buildingName;
         public BuildingType buildingType;
-        public GameObject buildingPrefab;
+        public Building buildingPrefab;
         public Sprite buildingIcon;
         public Vector2Int dimensions;
         public int health;
+        public bool canProduceUnits;
+        public List<UnitSo> producibleUnits;
     }
+    
 }

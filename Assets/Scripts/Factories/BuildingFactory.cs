@@ -9,12 +9,12 @@ namespace Factories
         public BarrackFactory barrackFactory;
         public PowerPlantFactory powerPlantFactory;
         
-        public IPlaceable CreateBuilding(BuildingType buildingType)
+        public IPlaceable CreateBuilding(BuildingType buildingType, Transform parent)
         {
             IPlaceable building = buildingType switch
             {
-                BuildingType.Barrack => barrackFactory.Create(),
-                BuildingType.PowerPlant => powerPlantFactory.Create(),
+                BuildingType.Barrack => barrackFactory.Create(parent),
+                BuildingType.PowerPlant => powerPlantFactory.Create(parent),
                 _ => null
             };
 

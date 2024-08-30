@@ -1,6 +1,7 @@
 using System;
 using BuildingSystem;
 using Controllers;
+using Factories;
 using ScriptableObjects;
 using UnityEngine;
 using Utility;
@@ -10,12 +11,14 @@ namespace Managers
     public class BuildManager : MonoSingleton<BuildManager>
     {
         public Action OnBuildingPlaced;
-            
+
         [SerializeField] private PreviewObject previewObject;
         [SerializeField] private Transform board;
+        [SerializeField] private BuildingFactory buildingFactory;
         private BuildingSo _selectedBuilding;
 
         private State _state;
+
         private enum State
         {
             Idle,
@@ -29,6 +32,7 @@ namespace Managers
             InputManager.Instance.OnLeftClick += TryToBuild;
             previewObject.Hide();
         }
+
         private void OnDisable()
         {
             InputManager.Instance.OnLeftClick -= TryToBuild;
@@ -45,29 +49,34 @@ namespace Managers
             previewObject.Init(_selectedBuilding.buildingIcon, _selectedBuilding.dimensions);
             _state = State.Moving;
         }
-        
+
         private void TryMovePreviewObject(Vector3 cursorPos)
         {
             if (_selectedBuilding && _state == State.Moving)
             {
-                previewObject.ChangePosition(cursorPos, 
+                previewObject.ChangePosition(cursorPos,
                     GridController.Instance.IsPlaceValid(cursorPos, _selectedBuilding.dimensions, out _));
             }
         }
+
+        // ReSharper disable Unity.PerformanceAnalysis
         private void TryToBuild(Vector3 position)
         {
-            if(!_selectedBuilding)
+            if (!_selectedBuilding)
             {
                 return;
             }
-            if(GridController.Instance.IsPlaceValid(position, _selectedBuilding.dimensions, out var buildingPosition))
+
+            if (GridController.Instance.IsPlaceValid(position, _selectedBuilding.dimensions, out var buildingPosition))
             {
                 _state = State.Building;
                 GridController.Instance.Place(position, CellType.Building, _selectedBuilding.dimensions);
-                var building = Instantiate(_selectedBuilding.buildingPrefab, board);
-                building.transform.position = buildingPosition;
+
+
+                var building = buildingFactory.CreateBuilding(_selectedBuilding.buildingType, board);
+                building.Place(buildingPosition);
                 OnBuildingPlaced?.Invoke();
-                
+
                 _state = State.Idle;
                 previewObject.Hide();
                 _selectedBuilding = null;
@@ -76,12 +85,6 @@ namespace Managers
             {
                 Debug.Log("Invalid Position");
             }
-            
-            
         }
-        
-        
-
-        
     }
 }

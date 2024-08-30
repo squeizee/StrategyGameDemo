@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8131097026713255652}
   - component: {fileID: 6995689142512089487}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Barrack
-  m_TagString: Untagged
+  m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 6627816437626628476}
   - component: {fileID: 5751874529734320421}
   - component: {fileID: 309617021738480901}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SpriteRenderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}

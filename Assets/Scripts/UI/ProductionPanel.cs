@@ -33,10 +33,14 @@ namespace UI
 
         private float _lastCheckedYPosition = 200f;
 
-        private void Start()
+        private void Awake()
         {
             MoveDirection = -1;
             InitialXPosition = transform.localPosition.x;
+        }
+
+        private void Start()
+        {
             CreateProducts();
         }
         

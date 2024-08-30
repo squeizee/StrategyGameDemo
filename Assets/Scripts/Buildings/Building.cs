@@ -17,6 +17,7 @@ namespace Buildings
         [SerializeField] private BuildingSo so;
         [SerializeField] private int currentHealth;
 
+        public BuildingSo So => so;
         public int Health
         {
             get => currentHealth;
@@ -24,7 +25,7 @@ namespace Buildings
         }
         public bool IsDead => currentHealth <= 0;
 
-        public void Initialize()
+        public void Init()
         {
             Health = so.health;
         }
@@ -46,9 +47,10 @@ namespace Buildings
             Destroy(gameObject);
         }
 
-        public void Place()
+        public void Place(Vector3 position)
         {
-            
+            transform.position = position;
+            Debug.Log($"{so.buildingType} placed.");
         }
     }
 }
