@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UI;
 using UnityEngine;
 using Utility;
@@ -33,8 +34,8 @@ namespace Managers
         }
         private void HideAllPanels()
         {
-            productionPanel.Hide();
             informationPanel.Hide();
+            productionPanel.Hide();
         }
     }
 }
