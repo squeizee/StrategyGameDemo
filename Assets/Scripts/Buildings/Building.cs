@@ -1,32 +1,39 @@
+using System;
 using Interfaces;
+using ScriptableObjects;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Buildings
 {
     public enum BuildingType
     {
-        Barracks,
+        Barrack,
         PowerPlant,
     }
 
     public abstract class Building : MonoBehaviour, IPlaceable ,IDamageable
     {
-        [SerializeField] protected BuildingType buildingType;
-        [SerializeField] private int health = 100;
+        [SerializeField] private BuildingSo so;
+        [SerializeField] private int currentHealth;
 
         public int Health
         {
-            get => health;
-            set => health = value;
+            get => currentHealth;
+            set => currentHealth = value;
         }
+        public bool IsDead => currentHealth <= 0;
 
-        public bool IsDead => health <= 0;
+        public void Initialize()
+        {
+            Health = so.health;
+        }
 
         public virtual void TakeDamage(int damage)
         {
-            health -= damage;
+            currentHealth -= damage;
 
-            Debug.Log($"{buildingType} took {damage} damage. Remaining health: {health}");
+            Debug.Log($"{so.buildingType} took {damage} damage. Remaining health: {currentHealth}");
             
             if (IsDead)
             {

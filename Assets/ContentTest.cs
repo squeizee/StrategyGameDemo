@@ -14,8 +14,6 @@ public class ContentTest : MonoBehaviour
     
     private const float threshold = 200f;
     
-    
-    
     public ScrollRect scrollRect;
 
     private void Start()
@@ -45,8 +43,8 @@ public class ContentTest : MonoBehaviour
         
         var lastYValue = pool[^1].transform.localPosition.y;
         
-        firstTwo[0].transform.localPosition = new Vector3(firstTwo[0].transform.localPosition.x, lastYValue - 200f, firstTwo[0].transform.localPosition.z);
-        firstTwo[1].transform.localPosition = new Vector3(firstTwo[1].transform.localPosition.x, lastYValue - 200f, firstTwo[1].transform.localPosition.z); 
+        firstTwo[0].transform.localPosition = new Vector3(firstTwo[0].transform.localPosition.x, lastYValue - threshold, firstTwo[0].transform.localPosition.z);
+        firstTwo[1].transform.localPosition = new Vector3(firstTwo[1].transform.localPosition.x, lastYValue - threshold, firstTwo[1].transform.localPosition.z); 
         
         pool.AddRange(firstTwo);
         
@@ -58,8 +56,9 @@ public class ContentTest : MonoBehaviour
         pool.RemoveRange(pool.Count - 2, 2);
         
         var firstYValue = pool[0].transform.localPosition.y;
-        lastTwo[0].transform.localPosition = new Vector3(lastTwo[0].transform.localPosition.x, firstYValue + 200f, lastTwo[0].transform.localPosition.z);
-        lastTwo[1].transform.localPosition = new Vector3(lastTwo[1].transform.localPosition.x, firstYValue + 200f, lastTwo[1].transform.localPosition.z); 
+        
+        lastTwo[0].transform.localPosition = new Vector3(lastTwo[0].transform.localPosition.x, firstYValue + threshold, lastTwo[0].transform.localPosition.z);
+        lastTwo[1].transform.localPosition = new Vector3(lastTwo[1].transform.localPosition.x, firstYValue + threshold, lastTwo[1].transform.localPosition.z); 
         
         pool.InsertRange(0, lastTwo);
     }

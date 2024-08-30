@@ -13,7 +13,7 @@ namespace Factories
         {
             IPlaceable building = buildingType switch
             {
-                BuildingType.Barracks => barrackFactory.Create(),
+                BuildingType.Barrack => barrackFactory.Create(),
                 BuildingType.PowerPlant => powerPlantFactory.Create(),
                 _ => null
             };
