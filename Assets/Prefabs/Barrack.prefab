@@ -45,8 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b467e19b63434067aa3395fa73bf36fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingType: 0
-  health: 100
+  so: {fileID: 11400000, guid: 3fb194f15605efe4ca638fdf298b9f3f, type: 2}
+  currentHealth: 0
 --- !u!1 &6488257944920289018
 GameObject:
   m_ObjectHideFlags: 0

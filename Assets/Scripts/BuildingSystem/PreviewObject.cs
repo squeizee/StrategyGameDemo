@@ -1,3 +1,4 @@
+using Managers;
 using UnityEngine;
 
 namespace BuildingSystem
@@ -12,23 +13,27 @@ namespace BuildingSystem
         public void Init(Sprite sprite, Vector2Int dimensions)
         {
             spriteRenderer.sprite = sprite;
-            transform.localScale = new Vector3(dimensions.x, dimensions.y, 1);
+            spriteRenderer.transform.localScale = new Vector3(dimensions.x, dimensions.y, 1);
+            spriteRenderer.transform.localPosition = new Vector3(dimensions.x / 2f, dimensions.y / 2f, 0);
+            transform.localPosition = InputManager.Instance.MousePosition;
+
+            Show();
         }
-        
+
+        public void Show()
+        {
+            gameObject.SetActive(true);
+        }
+
+        public void Hide()
+        {
+            gameObject.SetActive(false);
+        }
+
         public void ChangePosition(Vector3 position, bool isValid)
         {
-            transform.position = position;
+            transform.localPosition = position;
             SetColor(isValid ? _validColor : _invalidColor);
-        }
-
-        public void OnInvalidPosition()
-        {
-            SetColor(_invalidColor);
-        }
-
-        public void OnValidPosition()
-        {
-            SetColor(_validColor);
         }
 
         private void SetColor(Color color)

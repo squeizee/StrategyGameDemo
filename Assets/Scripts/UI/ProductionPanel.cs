@@ -1,5 +1,9 @@
 using System;
 using System.Collections.Generic;
+using Buildings;
+using BuildingSystem;
+using DG.Tweening;
+using Managers;
 using ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -8,29 +12,33 @@ namespace UI
 {
     public class ProductionPanel : Panel
     {
+        public Action OnProductSelected;
+
         [SerializeField] private BuildingProduct buildingProductPrefab;
         [SerializeField] private Transform productsParent;
-        
+
         [SerializeField] private List<BuildingSo> buildingSos;
-        
-        [Header("Minimum Product for Infinite Scroll")]
-        [SerializeField] private int productCount = 12;
-        
+
+        [Header("Minimum Product for Infinite Scroll")] [SerializeField]
+        private int productCount = 12;
+
         [SerializeField] private bool randomizeProducts = true;
-        [SerializeField] private List<BuildingProduct> _buildingProducts = new();
+
+        private List<BuildingProduct> _buildingProducts = new();
         private Vector3 _initialPosition = new Vector3(-100f, -125f, 0f);
-        
+
         private const int _columnCount = 2;
         private float _increment = 200f;
         private const float threshold = 200f;
-        
+
         private float _lastCheckedYPosition = 200f;
 
         private void Start()
         {
+            MoveDirection = -1;
             CreateProducts();
         }
-
+        
         private void Update()
         {
             if (productsParent.localPosition.y > _lastCheckedYPosition + threshold)
@@ -44,8 +52,24 @@ namespace UI
                 _lastCheckedYPosition -= threshold;
             }
         }
-        
-        
+
+        public override void Show()
+        {
+            base.Show();
+        }
+
+        public override void Hide()
+        {
+            base.Hide();
+        }
+        private void ProductClicked(BuildingType buildingType)
+        {
+            var buildingSo = buildingSos.Find(x => x.buildingType == buildingType);
+            BuildManager.Instance.SetSelectedBuilding(buildingSo);
+
+            OnProductSelected?.Invoke();
+            Debug.Log("Product Clicked: " + buildingType);
+        }
 
         private void CreateProducts()
         {
@@ -55,63 +79,73 @@ namespace UI
                 BuildingProduct buildingProduct = Instantiate(buildingProductPrefab, productsParent);
                 var position = _initialPosition + new Vector3(0, -_increment * i, 0);
                 var randomBuildIndex = UnityEngine.Random.Range(0, buildingSos.Count);
-                buildingProduct.Init(buildingSos[randomBuildIndex].buildingIcon, buildingSos[randomBuildIndex].buildingType, position);
-                
+                buildingProduct.Init(buildingSos[randomBuildIndex].buildingIcon,
+                    buildingSos[randomBuildIndex].buildingType, position);
+                buildingProduct.OnProductClicked += ProductClicked;
+
                 _buildingProducts.Add(buildingProduct);
-                
+
                 // Right Side
                 buildingProduct = Instantiate(buildingProductPrefab, productsParent);
                 position = _initialPosition + new Vector3(_increment, -_increment * i, 0);
                 randomBuildIndex = UnityEngine.Random.Range(0, buildingSos.Count);
-                buildingProduct.Init(buildingSos[randomBuildIndex].buildingIcon, buildingSos[randomBuildIndex].buildingType, position);
-                
+                buildingProduct.Init(buildingSos[randomBuildIndex].buildingIcon,
+                    buildingSos[randomBuildIndex].buildingType, position);
+
+                buildingProduct.OnProductClicked += ProductClicked;
                 _buildingProducts.Add(buildingProduct);
             }
         }
-        
+
         private void MoveToBottom()
         {
-            var firstTwo = _buildingProducts.GetRange(0,2);
-            _buildingProducts.RemoveRange(0,2);
-        
+            var firstTwo = _buildingProducts.GetRange(0, 2);
+            _buildingProducts.RemoveRange(0, 2);
+
             var lastYValue = _buildingProducts[^1].transform.localPosition.y;
-        
-            firstTwo[0].transform.localPosition = new Vector3(firstTwo[0].transform.localPosition.x, lastYValue - threshold, firstTwo[0].transform.localPosition.z);
-            firstTwo[1].transform.localPosition = new Vector3(firstTwo[1].transform.localPosition.x, lastYValue - threshold, firstTwo[1].transform.localPosition.z);
+
+            firstTwo[0].transform.localPosition = new Vector3(firstTwo[0].transform.localPosition.x,
+                lastYValue - threshold, firstTwo[0].transform.localPosition.z);
+            firstTwo[1].transform.localPosition = new Vector3(firstTwo[1].transform.localPosition.x,
+                lastYValue - threshold, firstTwo[1].transform.localPosition.z);
 
 
             if (randomizeProducts)
             {
                 var randomBuildIndex = UnityEngine.Random.Range(0, buildingSos.Count);
-                firstTwo[0].Init(buildingSos[randomBuildIndex].buildingIcon, buildingSos[randomBuildIndex].buildingType, firstTwo[0].transform.localPosition);
+                firstTwo[0].Init(buildingSos[randomBuildIndex].buildingIcon, buildingSos[randomBuildIndex].buildingType,
+                    firstTwo[0].transform.localPosition);
                 randomBuildIndex = UnityEngine.Random.Range(0, buildingSos.Count);
-                firstTwo[1].Init(buildingSos[randomBuildIndex].buildingIcon, buildingSos[randomBuildIndex].buildingType, firstTwo[1].transform.localPosition);
+                firstTwo[1].Init(buildingSos[randomBuildIndex].buildingIcon, buildingSos[randomBuildIndex].buildingType,
+                    firstTwo[1].transform.localPosition);
             }
-            
+
             _buildingProducts.AddRange(firstTwo);
-        
         }
-    
+
         private void MoveToTop()
         {
             var lastTwo = _buildingProducts.GetRange(_buildingProducts.Count - 2, 2);
             _buildingProducts.RemoveRange(_buildingProducts.Count - 2, 2);
-        
+
             var firstYValue = _buildingProducts[0].transform.localPosition.y;
-        
-            lastTwo[0].transform.localPosition = new Vector3(lastTwo[0].transform.localPosition.x, firstYValue + threshold, lastTwo[0].transform.localPosition.z);
-            lastTwo[1].transform.localPosition = new Vector3(lastTwo[1].transform.localPosition.x, firstYValue + threshold, lastTwo[1].transform.localPosition.z); 
-        
+
+            lastTwo[0].transform.localPosition = new Vector3(lastTwo[0].transform.localPosition.x,
+                firstYValue + threshold, lastTwo[0].transform.localPosition.z);
+            lastTwo[1].transform.localPosition = new Vector3(lastTwo[1].transform.localPosition.x,
+                firstYValue + threshold, lastTwo[1].transform.localPosition.z);
+
             if (randomizeProducts)
             {
                 var randomBuildIndex = UnityEngine.Random.Range(0, buildingSos.Count);
-                lastTwo[0].Init(buildingSos[randomBuildIndex].buildingIcon, buildingSos[randomBuildIndex].buildingType, lastTwo[0].transform.localPosition);
+                lastTwo[0].Init(buildingSos[randomBuildIndex].buildingIcon, buildingSos[randomBuildIndex].buildingType,
+                    lastTwo[0].transform.localPosition);
                 randomBuildIndex = UnityEngine.Random.Range(0, buildingSos.Count);
-                lastTwo[1].Init(buildingSos[randomBuildIndex].buildingIcon, buildingSos[randomBuildIndex].buildingType, lastTwo[1].transform.localPosition);
+                lastTwo[1].Init(buildingSos[randomBuildIndex].buildingIcon, buildingSos[randomBuildIndex].buildingType,
+                    lastTwo[1].transform.localPosition);
             }
+
             _buildingProducts.InsertRange(0, lastTwo);
         }
-        
-        
     }
 }

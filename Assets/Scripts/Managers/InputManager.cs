@@ -1,43 +1,35 @@
 using System;
+using Controllers;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using Utility;
 
 namespace Managers
 {
-    public class InputManager : MonoBehaviour
+    public class InputManager : MonoSingleton<InputManager>
     {
-        public static InputManager Instance { get; private set; }
-        
         [SerializeField] private Camera mainCamera;
         
         public Action<Vector3> OnLeftClick, OnRightClick;
-
-        private void Awake()
-        {
-            if (Instance == null)
-            {
-                Instance = this;
-            }
-            else
-            {
-                Destroy(this);
-            }
-        }
+        
+        public Vector3 MousePosition => GetGridSnappedPosition(Input.mousePosition);
 
         private void Update()
         {
             if (Input.GetMouseButtonDown(0))
             {
-                OnLeftClick?.Invoke(GetWorldPosition(Input.mousePosition));
+                OnLeftClick?.Invoke(GetGridSnappedPosition(Input.mousePosition));
             }
             if (Input.GetMouseButtonDown(1))
             {
-                OnRightClick?.Invoke(GetWorldPosition(Input.mousePosition));
+                OnRightClick?.Invoke(GetGridSnappedPosition(Input.mousePosition));
             }
         }
         
-        private Vector3 GetWorldPosition(Vector3 screenPosition)
+        private Vector3 GetGridSnappedPosition(Vector3 position)
         {
-            return mainCamera.ScreenToWorldPoint(screenPosition);
+            var pos = mainCamera.ScreenToWorldPoint(position);
+            return GridController.Instance.GetSnappedPosition(pos);
         }
     }
 }

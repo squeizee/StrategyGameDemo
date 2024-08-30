@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using BuildingSystem;
 using PathFinding;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using Utility;
 
 namespace Controllers
 {
@@ -13,29 +15,17 @@ namespace Controllers
         Unit,
     }
     
-    public class GridController : MonoBehaviour
+    public class GridController : MonoSingleton<GridController>
     {
-        public static GridController Instance;
-        
         [SerializeField] private Camera mainCamera;
         [SerializeField] private Cell cellPrefab;
-        [SerializeField] private PreviewObject previewObject;
         
         private readonly Vector3 _cellOffset = new(.5f, .5f, 0);
         
         private int _gridWidth,_gridHeight;
         private List<Cell> _cells = new();
-        private void Awake()
-        {
-            if (Instance == null)
-            {
-                Instance = this;
-            }
-            else
-            {
-                Destroy(this);
-            }
-        }
+        
+        private GameObject _selectedObject;
 
         private void Start()
         {
@@ -54,6 +44,21 @@ namespace Controllers
             cellWorldPosition = cell.WorldPosition - _cellOffset;
             return cell.CellType == CellType.Empty;
         }
+        public Vector3 GetSnappedPosition(Vector3 position)
+        {
+            var gridPosition = GetGridPosition(position);
+            var cell = GetCell(gridPosition);
+            if (!cell)
+            {
+                return position;
+            }
+            
+            //ignore Z axis
+            var worldPos = cell.WorldPosition;
+            worldPos.z = 0;
+            
+            return worldPos - _cellOffset;
+        }
         public Node[,] GetNodes()
         {
             var nodes = new Node[_gridWidth, _gridHeight];
@@ -66,6 +71,11 @@ namespace Controllers
             }
             
             return nodes;
+        }
+        public bool IsPlaceValid(Vector3 cursorPos, Vector2Int selectedBuildingDimensions)
+        {
+            var gridPosition = GetGridPosition(cursorPos);
+            return IsValidToBuild(selectedBuildingDimensions, cursorPos);
         }
         private bool IsValidToBuild(Vector2Int dim, Vector3 position)
         {
@@ -121,7 +131,5 @@ namespace Controllers
         {
             return _cells.Find(cell => cell.GridPosition == gridPosition);
         }
-        
-        
     }
 }

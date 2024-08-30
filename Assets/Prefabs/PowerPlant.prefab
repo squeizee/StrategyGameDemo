@@ -46,8 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04ebb92190a24aa2802a78afdca8fc95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingType: 1
-  health: 50
+  so: {fileID: 11400000, guid: abc3ada6abd4450408b4a3260690b553, type: 2}
+  currentHealth: 0
 --- !u!212 &5523510081889202879
 SpriteRenderer:
   m_ObjectHideFlags: 0
