@@ -14,11 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: Soldier2
   unitType: 1
-  unitPrefab: {fileID: 8130310931272761697, guid: 27ba287de29d3ac4d856c2a181b0faca, type: 3}
+  unitPrefab: {fileID: 6034593409416361303, guid: 27ba287de29d3ac4d856c2a181b0faca, type: 3}
   unitIcon: {fileID: 21300000, guid: 0d9d0fa329ab1a3469c31b0e63927307, type: 3}
   dimension: {x: 1, y: 1}
   health: 10
   damage: 5
-  attackRange: 1
-  attackSpeed: 1
-  moveSpeed: 1
+  attackRange: 2
+  moveSpeed: 13

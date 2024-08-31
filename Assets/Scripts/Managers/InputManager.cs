@@ -12,10 +12,12 @@ namespace Managers
         
         public Action<Vector3> OnLeftClick, OnRightClick;
         public Action<GameObject> OnBuildingSelected, OnUnitSelected;
+        public Action<GameObject,Vector2> OnAttack;
         public Vector3 MousePosition => GetGridSnappedPosition(Input.mousePosition);
-
+        
         private void Update()
         {
+            
             if (Input.GetMouseButtonDown(0))
             {
                 if (GetGameObjectUnderMouse(LayerMask.NameToLayer("Board"), out var underMouse, out var hit))
@@ -38,7 +40,21 @@ namespace Managers
             }
             if (Input.GetMouseButtonDown(1))
             {
-                OnRightClick?.Invoke(GetGridSnappedPosition(Input.mousePosition));
+                var pos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+                pos.z = 0;
+                
+                // if CellType is Empty
+                if (GridController.Instance.IsEmptyCell(pos))
+                {
+                    OnRightClick?.Invoke(pos);
+                }
+                else if (GetGameObjectUnderMouse(LayerMask.NameToLayer("Board"), out var underMouse, out var hit))
+                {
+                    if (underMouse.CompareTag("Building") || underMouse.CompareTag("Unit"))
+                    {
+                        OnAttack?.Invoke(underMouse,hit.point);
+                    }
+                }
             }
         }
         

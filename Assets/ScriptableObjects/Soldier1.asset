@@ -19,6 +19,5 @@ MonoBehaviour:
   dimension: {x: 1, y: 1}
   health: 10
   damage: 10
-  attackRange: 1
-  attackSpeed: 1
-  moveSpeed: 1
+  attackRange: 2
+  moveSpeed: 15

@@ -14,7 +14,6 @@ namespace ScriptableObjects
         public int health;
         public int damage;
         public float attackRange;
-        public float attackSpeed;
         public float moveSpeed;
     }
 }

@@ -1,22 +1,20 @@
-using UnityEngine;
-
-namespace PathFinding
+namespace PathFind
 {
     public class Node
     {
         public bool Walkable;
-        public Vector3 WorldPosition;
         public int GridX;
         public int GridY;
-
+        public float Penalty;
+        
         public int GCost;
         public int HCost;
         public Node Parent;
-
-        public Node(bool walkable, Vector3 worldPosition, int gridX, int gridY)
+        
+        public Node(float price, int gridX, int gridY)
         {
-            Walkable = walkable;
-            WorldPosition = worldPosition;
+            Walkable = price != 0.0f;
+            Penalty = price;
             GridX = gridX;
             GridY = gridY;
         }

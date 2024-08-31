@@ -17,7 +17,7 @@ namespace Factories
                 BuildingType.PowerPlant => powerPlantFactory.Create(parent),
                 _ => null
             };
-
+            
             return building;
         }
     }

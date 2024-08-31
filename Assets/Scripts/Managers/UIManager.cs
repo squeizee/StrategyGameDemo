@@ -15,6 +15,7 @@ namespace Managers
         [SerializeField] private ProductionPanel productionPanel;
         [SerializeField] private InformationPanel informationPanel;
 
+        private bool _isProductPanelActive;
         private void OnEnable()
         {
             ObjectPlacer.Instance.OnBuildingPlaced += ShowProductPanel;
@@ -39,6 +40,24 @@ namespace Managers
         {
             informationPanel.Hide(0f);
         }
+
+        private void Update()
+        {
+            if(Input.GetKeyDown(KeyCode.Q))
+            {
+                _isProductPanelActive = !_isProductPanelActive;
+                
+                if (_isProductPanelActive)
+                {
+                    ShowProductPanel();
+                }
+                else
+                {
+                    HideProductPanel();
+                }
+            }
+        }
+
         private void OnUnitProductSelected()
         {
             HideInformationPanel();
